@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+  background-color: #2e2e2e;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  color: #ffffff;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+td {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 72px;
+  font-weight: bold;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  animation: shake 0.5s ease-in-out;
+  box-shadow: 0px 0px 10px #000000;
+}
+
+td:hover {
+  background-color: #3d3d3d;
+  box-shadow: 0px 0px 15px #ffffff;
+}
+
+td:active {
+  background-color: #4d4d4d;
+  box-shadow: 0px 0px 5px #ffffff;
+  animation: pop 0.2s ease-in-out;
+}
+
+#winner {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  display: none;
+  color: #ffffff;
+  animation: slide-down 0.5s ease-in-out;
+  text-shadow: 0px 0px 5px #000000;
+}
+
+/* New colors */
+td:nth-child(odd) {
+  background-color: #585858;
+}
+
+td:nth-child(even) {
+  background-color: #333333;
+}
+
+#winner.win {
+  color: #4caf50;
+  text-shadow: 0px 0px 5px #4caf50;
+}
+
+/* Animations */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slide-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Tic Tac Toe</h1>
+    <table>
+        <tr>
+            <td id="cell1" onclick="play(1)"></td>
+            <td id="cell2" onclick="play(2)"></td>
+            <td id="cell3" onclick="play(3)"></td>
+        </tr>
+        <tr>
+            <td id="cell4" onclick="play(4)"></td>
+            <td id="cell5" onclick="play(5)"></td>
+            <td id="cell6" onclick="play(6)"></td>
+        </tr>
+        <tr>
+            <td id="cell7" onclick="play(7)"></td>
+            <td id="cell8" onclick="play(8)"></td>
+            <td id="cell9" onclick="play(9)"></td>
+        </tr>
+    </table>
+    <div id="winner"></div>
+    <script>
+        var player = 1;
+        var board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var winningCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+        var gameOver = false;
+
+        function play(cell) {
+            if (!gameOver && board[cell - 1] === 0) {
+                board[cell - 1] = player;
+                document.getElementById("cell" + cell).innerHTML = player === 1 ? "X" : "O";
+                checkWin();
+                player = player === 1 ? 2 : 1;
+            }
+        }
+
+        function checkWin() {
+            for (var i = 0; i < winningCombos.length; i++) {
+                var combo = winningCombos[i];
+                if (board[combo[0]] !== 0 && board[combo[0]] === board[combo[1]] && board[combo[1]] === board[combo[2]]) {
+                    gameOver = true;
+                    document.getElementById("winner").innerHTML = "Player " + player + " wins!";
+                    document.getElementById("winner").style.display = "block";
+                                    break;
+                                }
+                            }
+                            if (!board.includes(0) && !gameOver) {
+                                gameOver = true;
+                                document.getElementById("winner").innerHTML = "It's a tie!";
+                                document.getElementById("winner").style.display = "block";
+                            }
+                        }
+                    </script>
+
+</body>
+</html>
